@@ -1,8 +1,9 @@
-import { Button, Container } from 'rsuite';
-import 'rsuite/dist/rsuite.min.css';
+import MainContainer from '../components/main-container/MainContainer';
+
+import './App.less';
 
 const App = () => {
-  return <Container></Container>;
+  return <MainContainer></MainContainer>;
 }
 
 export default App;

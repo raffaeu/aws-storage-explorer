@@ -1,7 +1,7 @@
 {
-  "name": "my-app",
-  "version": "0.2.0",
-  "author": "Your Name",
+  "name": "aws-storage-explorer",
+  "version": "1.0.0",
+  "author": "Raffaele Garofalo",
   "description": "React-TypeScript-Electron sample with Create React App and Electron Builder",
   "homepage": ".",
   "main": "build/electron/main.js",
@@ -16,9 +16,14 @@
     "@types/node": "^18.13.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "customize-cra": "^1.0.0",
+    "customize-cra-less-loader": "^2.0.0",
     "electron-devtools-installer": "^3.2.0",
     "electron-reload": "^1.5.0",
+    "less": "^4.2.0",
+    "less-loader": "^12.2.0",
     "react": "^18.2.0",
+    "react-app-rewired": "^2.2.1",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "rsuite": "^5.55.1",
@@ -26,13 +31,12 @@
     "web-vitals": "^3.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "postinstall": "electron-builder install-app-deps",
     "electron:dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://127.0.0.1:3000 && tsc -p electron -w\" \"wait-on http://127.0.0.1:3000 && tsc -p electron && electron .\"",
-    "electron:build": "yarn build && tsc -p electron && electron-builder",
-    "eject": "react-scripts eject"
+    "electron:build": "yarn build && tsc -p electron && electron-builder"
   },
   "build": {
     "extends": null,
@@ -62,7 +66,9 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "concurrently": "^7.6.0",
+    "craco-less": "^3.0.1",
     "cross-env": "^7.0.3",
     "electron": "^23.3.13",
     "electron-builder": "^23.6.0",
