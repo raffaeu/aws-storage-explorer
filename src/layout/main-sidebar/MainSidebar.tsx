@@ -1,12 +1,17 @@
 import * as React from 'react';
 import { Sidebar, Sidenav, Nav } from 'rsuite';
 
-import { Dashboard, Gear, Setting, Storage, Table, UserBadge } from '@rsuite/icons';
+import { Dashboard, Gear, Storage, Table, UserBadge } from '@rsuite/icons';
 
 import Logo from '../../assets/AWS_logo_RGB_REV.svg';
 import './MainSidebar.less';
 
-const MainSidebar = () => {
+interface MainSidebarProps {
+    currentSection: string,
+    setSection: (section: string) => void,
+}
+
+const MainSidebar = ({ currentSection, setSection }: MainSidebarProps) => {
 
     return (
         <Sidebar
@@ -22,16 +27,16 @@ const MainSidebar = () => {
                     </div>
                 </Sidenav.Header>
                 <Sidenav.Body>
-                    <Nav>
-                        <Nav.Item icon={<Dashboard />} eventKey="dashboard">Dashboard</Nav.Item>
-                        <Nav.Item icon={<Storage />} eventKey="storage">Storage</Nav.Item>
-                        <Nav.Item icon={<Table />} eventKey="table">Table</Nav.Item>
+                    <Nav activeKey={currentSection}>
+                        <Nav.Item onClick={(e) => setSection(e.currentTarget.getAttribute('data-event-key') ?? '')} icon={<Dashboard style={{ fontSize: 24, height: 24, marginLeft: -3 }} />} eventKey="dashboard">Dashboard</Nav.Item>
+                        <Nav.Item onClick={(e) => setSection(e.currentTarget.getAttribute('data-event-key') ?? '')} icon={<Storage style={{ fontSize: 24, height: 24, marginLeft: -3 }} />} eventKey="storages">Storage</Nav.Item>
+                        <Nav.Item onClick={(e) => setSection(e.currentTarget.getAttribute('data-event-key') ?? '')} icon={<Table style={{ fontSize: 24, height: 24, marginLeft: -3 }} />} eventKey="tables">Table</Nav.Item>
                     </Nav>
                 </Sidenav.Body>
                 <Sidenav.Body className='sidebar-settings'>
-                    <Nav>
-                        <Nav.Item icon={<UserBadge />} eventKey="profile">Profile</Nav.Item>
-                        <Nav.Item icon={<Gear />} eventKey="setting">Settings</Nav.Item>
+                    <Nav activeKey={currentSection}>
+                        <Nav.Item onClick={(e) => setSection(e.currentTarget.getAttribute('data-event-key') ?? '')} icon={<UserBadge style={{ fontSize: 24, height: 24, marginLeft: -3 }} />} eventKey="profile">Profile</Nav.Item>
+                        <Nav.Item onClick={(e) => setSection(e.currentTarget.getAttribute('data-event-key') ?? '')} icon={<Gear style={{ fontSize: 24, height: 24, marginLeft: -3 }} />} eventKey="settings">Settings</Nav.Item>
                     </Nav>
                 </Sidenav.Body>
             </Sidenav>
