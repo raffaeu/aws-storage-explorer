@@ -1,4 +1,4 @@
-import MainContainer from '../components/main-container/MainContainer';
+import MainContainer from './main-container/MainContainer';
 
 import './App.less';
 
