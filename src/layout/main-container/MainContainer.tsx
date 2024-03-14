@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { HashRouter } from 'react-router-dom';
 
 import { Container, Content } from 'rsuite';
 import MainSidebar from '../main-sidebar/MainSidebar';
@@ -22,7 +23,9 @@ const MainContainer = () => {
             <Content>
                 <Container>
                     {/* Subnavigation */}
-                    <SubSidebar currentSection={currentSection} />
+                    <HashRouter>
+                        <SubSidebar currentSection={currentSection} />
+                    </HashRouter>
                     {/* Main content */}
 
                 </Container>
