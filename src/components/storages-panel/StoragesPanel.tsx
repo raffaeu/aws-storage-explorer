@@ -6,51 +6,42 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './StoragesPanel.less';
 
-const data = [
-    {
-        label: '12345678',
-        value: '12345678',
-        type: 'account',
-        children: [
-            {
-                label: 'Bucket-123',
-                value: 'Bucket-123',
-                type: 'bucket'
-            },
-            {
-                label: 'Bucket-456',
-                value: 'Bucket-456',
-                type: 'bucket'
-            }
-        ]
-    },
-    {
-        label: '87654321',
-        value: '87654321',
-        type: 'account',
-        children: [
-            {
-                label: 'Bucket-789',
-                value: 'Bucket-789',
-                type: 'bucket'
-            },
-            {
-                label: 'Bucket-135',
-                value: 'Bucket-135',
-                type: 'bucket'
-            },
-            {
-                label: 'Bucket-987',
-                value: 'Bucket-987',
-                type: 'bucket'
-            }
-        ]
-    },
-];
+const getRandomArray = () => {
+    const length = Math.floor(Math.random() * 10) + 1; // Random length between 1 and 10
+    let array: number[] = [];
+    for (let i = 0; i < length; i++) {
+        const randomInt = Math.floor(Math.random() * 100); // Random integer between 0 and 99 (you can adjust range as needed)
+        array.push(randomInt);
+    }
+    return array
+        .filter((item, index) => array.indexOf(item) === index)
+        .sort((a, b) => a - b);
+};
+
+const generateNodes = () => {
+    let data = [];
+    for (let i = 0; i < 30; i++) {
+        const ac = {
+            label: `${i + 1}-account`,
+            value: `${i + 1}-account`,
+            type: 'account',
+            children: getRandomArray().map(x => {
+                return {
+                    label: `${i + 1}-bucket-${x + 1}`,
+                    value: `${i + 1}-bucket-${x + 1}`,
+                    type: 'bucket'
+                }
+            })
+        };
+        data.push(ac);
+    }
+    return data;
+};
 
 const StoragesPanel = () => {
     return (
         <div className="storages-panel">
+            <hr />
             <Navbar>
                 <Nav>
                     <Nav.Item icon={<Plus />} />
@@ -62,7 +53,8 @@ const StoragesPanel = () => {
             </Navbar>
             <hr />
             <Tree
-                data={data}
+                className='storages-list'
+                data={generateNodes()}
                 showIndentLine
                 onSelect={(item, value) => console.log(value)}
                 renderTreeNode={node => {
@@ -78,6 +70,6 @@ const StoragesPanel = () => {
             />
         </div>
     );
-}
+};
 
 export default StoragesPanel;
