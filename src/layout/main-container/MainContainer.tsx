@@ -9,7 +9,7 @@ import SubSidebar from '../sub-sidebar/SubSidebar';
 
 const MainContainer = () => {
 
-    const [currentSection, setCurrentSection] = React.useState('dashboard');
+    const [currentSection, setCurrentSection] = React.useState('storages');
 
     const setSection = (section: string) => {
         setCurrentSection(section);

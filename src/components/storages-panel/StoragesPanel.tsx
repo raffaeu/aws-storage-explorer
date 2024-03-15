@@ -1,4 +1,5 @@
 import { Navbar, Nav, Tree } from 'rsuite';
+
 import { Plus, Reload, Trash } from '@rsuite/icons';
 import { faAws } from '@fortawesome/free-brands-svg-icons';
 import { faBitbucket } from '@fortawesome/free-brands-svg-icons';

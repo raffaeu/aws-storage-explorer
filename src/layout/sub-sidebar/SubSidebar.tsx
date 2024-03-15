@@ -34,7 +34,7 @@ const SubSidebar = ({ currentSection }: Props) => {
                 </Sidenav.Header>
                 <Sidenav.Body>
                     <Routes>
-                        <Route path='/' element={<DashboardPanel />} />
+                        <Route path='/' element={<StoragesPanel />} />
                         <Route path='/dashboard' element={<DashboardPanel />} />
                         <Route path='/storages' element={<StoragesPanel />} />
                         <Route path='/profile' element={<ProfilePanel />} />
