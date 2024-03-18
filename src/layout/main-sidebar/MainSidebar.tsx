@@ -35,8 +35,8 @@ const MainSidebar = ({ currentSection, setSection }: MainSidebarProps) => {
                 </Sidenav.Body>
                 <Sidenav.Body className='sidebar-settings'>
                     <Nav activeKey={currentSection}>
-                        <Nav.Item onClick={(e) => setSection(e.currentTarget.getAttribute('data-event-key') ?? '')} icon={<UserBadge style={{ fontSize: 24, height: 24, marginLeft: -3 }} />} eventKey="profile">Profile</Nav.Item>
-                        <Nav.Item onClick={(e) => setSection(e.currentTarget.getAttribute('data-event-key') ?? '')} icon={<Gear style={{ fontSize: 24, height: 24, marginLeft: -3 }} />} eventKey="settings">Settings</Nav.Item>
+                        <Nav.Item disabled onClick={(e) => setSection(e.currentTarget.getAttribute('data-event-key') ?? '')} icon={<UserBadge style={{ fontSize: 24, height: 24, marginLeft: -3 }} />} eventKey="profile">Profile</Nav.Item>
+                        <Nav.Item disabled onClick={(e) => setSection(e.currentTarget.getAttribute('data-event-key') ?? '')} icon={<Gear style={{ fontSize: 24, height: 24, marginLeft: -3 }} />} eventKey="settings">Settings</Nav.Item>
                     </Nav>
                 </Sidenav.Body>
             </Sidenav>

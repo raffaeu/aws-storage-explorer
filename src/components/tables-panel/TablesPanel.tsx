@@ -1,10 +1,12 @@
 import { Navbar, Nav, Tree } from 'rsuite';
 
 import { Plus, Reload, Trash, TableColumn } from '@rsuite/icons';
-import { faAws, faBitbucket } from '@fortawesome/free-brands-svg-icons';
+import { faAws } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './TablesPanel.less';
+import React from 'react';
+import RegisterTable from '../../dialogs/register-table/RegisterTable';
 
 const getRandomArray = () => {
     const length = Math.floor(Math.random() * 10) + 1; // Random length between 1 and 10
@@ -39,36 +41,42 @@ const generateNodes = () => {
 };
 
 const TablesPanel = () => {
+    const [registerOpen, setRegisterOpen] = React.useState(false);
+
     return (
-        <div className="tables-panel">
-            <hr />
-            <Navbar>
-                <Nav>
-                    <Nav.Item icon={<Plus />} />
-                    <Nav.Item icon={<Trash />} />
-                </Nav>
-                <Nav pullRight>
-                    <Nav.Item icon={<Reload />} />
-                </Nav>
-            </Navbar>
-            <hr />
-            <Tree
-                className='tables-list'
-                data={generateNodes()}
-                showIndentLine
-                onSelect={(item, value) => console.log(value)}
-                renderTreeNode={node => {
-                    return (
-                        <>
-                            {node.children ?
-                                <FontAwesomeIcon icon={faAws} style={{ color: 'orange', marginRight: 6 }} />
-                                : <TableColumn style={{ color: 'cyan', marginRight: 6 }} />}
-                            {node.label}
-                        </>
-                    );
-                }}
-            />
-        </div>
+        <>
+            <RegisterTable isOpen={registerOpen} handleClose={() => setRegisterOpen(false)} />
+
+            <div className="tables-panel">
+                <hr />
+                <Navbar>
+                    <Nav>
+                        <Nav.Item icon={<Plus />} onClick={() => setRegisterOpen(true)} />
+                        <Nav.Item icon={<Trash />} />
+                    </Nav>
+                    <Nav pullRight>
+                        <Nav.Item icon={<Reload />} />
+                    </Nav>
+                </Navbar>
+                <hr />
+                <Tree
+                    className='tables-list'
+                    data={generateNodes()}
+                    showIndentLine
+                    onSelect={(item, value) => console.log(value)}
+                    renderTreeNode={node => {
+                        return (
+                            <>
+                                {node.children ?
+                                    <FontAwesomeIcon icon={faAws} style={{ color: 'orange', marginRight: 6 }} />
+                                    : <TableColumn style={{ color: 'cyan', marginRight: 6 }} />}
+                                {node.label}
+                            </>
+                        );
+                    }}
+                />
+            </div>
+        </>
     );
 };
 

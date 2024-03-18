@@ -6,6 +6,7 @@ import MainSidebar from '../main-sidebar/MainSidebar';
 
 import './MainContainer.less';
 import SubSidebar from '../sub-sidebar/SubSidebar';
+import MainTab from '../main-tab/MainTab';
 
 const MainContainer = () => {
 
@@ -27,7 +28,7 @@ const MainContainer = () => {
                         <SubSidebar currentSection={currentSection} />
                     </HashRouter>
                     {/* Main content */}
-
+                    <MainTab />
                 </Container>
             </Content>
         </Container>
