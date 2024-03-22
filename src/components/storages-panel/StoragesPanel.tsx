@@ -1,4 +1,10 @@
-import { Navbar, Nav, Tree } from 'rsuite';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { createSelector } from '@reduxjs/toolkit';
+import { loadTree } from '../../redux/storage/storageSlice';
+import { openTab } from '../../redux/navigation/navigationSlice';
+
+import { Navbar, Nav, Tree, Loader } from 'rsuite';
+import { ItemDataType } from "rsuite/esm/@types/common";
 
 import RegisterBucket from '../../dialogs/register-bucket/RegisterBucket';
 
@@ -9,41 +15,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './StoragesPanel.less';
 import React from 'react';
+import { RootState } from '../../redux/store';
 
-const getRandomArray = () => {
-    const length = Math.floor(Math.random() * 10) + 1; // Random length between 1 and 10
-    let array: number[] = [];
-    for (let i = 0; i < length; i++) {
-        const randomInt = Math.floor(Math.random() * 100); // Random integer between 0 and 99 (you can adjust range as needed)
-        array.push(randomInt);
+const memoizedAccounts = createSelector(
+    [(state: RootState) => state.storage.accounts],
+    accounts => {
+        return accounts.map(account => {
+            return {
+                value: account.name,
+                label: account.name,
+                children: account.buckets.map(bucket => {
+                    return {
+                        value: bucket.name,
+                        label: bucket.name,
+                    } as ItemDataType<string>
+                })
+            } as ItemDataType<string>
+        })
     }
-    return array
-        .filter((item, index) => array.indexOf(item) === index)
-        .sort((a, b) => a - b);
-};
-
-const generateNodes = () => {
-    let data = [];
-    for (let i = 0; i < 30; i++) {
-        const ac = {
-            label: `${i + 1}-account`,
-            value: `${i + 1}-account`,
-            type: 'account',
-            children: getRandomArray().map(x => {
-                return {
-                    label: `${i + 1}-bucket-${x + 1}`,
-                    value: `${i + 1}-bucket-${x + 1}`,
-                    type: 'bucket'
-                }
-            })
-        };
-        data.push(ac);
-    }
-    return data;
-};
+)
 
 const StoragesPanel = () => {
 
+    const state = useAppSelector((state) => state);
+    const dispatch = useAppDispatch();
     const [registerOpen, setRegisterOpen] = React.useState(false);
 
     return (
@@ -57,26 +52,33 @@ const StoragesPanel = () => {
                         <Nav.Item icon={<Trash />} />
                     </Nav>
                     <Nav pullRight>
-                        <Nav.Item icon={<Reload />} />
+                        <Nav.Item icon={<Reload />} onClick={() => dispatch(loadTree())} />
                     </Nav>
                 </Navbar>
                 <hr />
-                <Tree
-                    className='storages-list'
-                    data={generateNodes()}
-                    showIndentLine
-                    onSelect={(item, value) => console.log(value)}
-                    renderTreeNode={node => {
-                        return (
-                            <>
-                                {node.children ?
-                                    <FontAwesomeIcon icon={faAws} style={{ color: 'orange', marginRight: 6 }} />
-                                    : <FontAwesomeIcon icon={faBitbucket} style={{ color: 'green', marginRight: 6 }} />}
-                                {node.label}
-                            </>
-                        );
-                    }}
-                />
+                {state.storage.isLoading && <Loader content="Loading..." vertical className='storage-loader' />}
+                {!state.storage.isLoading &&
+                    <Tree
+                        className='storages-list'
+                        data={memoizedAccounts(state)}
+                        onSelect={(item, value) => dispatch(openTab({
+                            label: value.toString(),
+                            type: item.children ? 'account' : 'bucket'
+                        }))}
+                        showIndentLine
+                        renderTreeNode={node => {
+                            return (
+                                <>
+                                    {node.children ?
+                                        <FontAwesomeIcon icon={faAws} style={{ color: 'orange', marginRight: 6 }} />
+                                        : <FontAwesomeIcon icon={faBitbucket} style={{ color: 'green', marginRight: 6 }} />}
+                                    {node.label}
+                                </>
+                            );
+                        }}
+                    />
+                }
+
             </div>
         </>
     );
